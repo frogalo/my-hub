@@ -1,11 +1,19 @@
 import React from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
 
-function App() {
+import {AppRoutes} from "./utils/AppRoutes";
+import {QueryClient, QueryClientProvider} from "react-query";
+
+const queryClient = new QueryClient()
+
+const App = () => {
     return (
-        <div>
-            <h1>Hello, World!</h1>
-        </div>
+        <QueryClientProvider client={queryClient}>
+            <Router>
+                <AppRoutes/>
+            </Router>
+        </QueryClientProvider>
     );
-}
+};
 
 export default App;

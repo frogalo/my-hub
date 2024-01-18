@@ -1,11 +1,13 @@
 const express = require('express');
 const {query, asyncFunction} = require('./db');
 const userRoutes = require('./routes/userRoutes');
+const cors = require('cors');
 
 
 const app = express();
 const port = process.env.PORT || 3001;
 
+app.use(cors());
 app.use(express.json());
 
 app.use('/users', userRoutes);
@@ -21,9 +23,10 @@ async function testDatabaseConnection() {
     }
 }
 
-testDatabaseConnection();
-
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+testDatabaseConnection()
+    .then(() => {
+        // Start the server after the database connection is established
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+        });
+    });

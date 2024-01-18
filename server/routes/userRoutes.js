@@ -120,10 +120,10 @@ router.post('/login', async (req, res) => {
         return res.status(200).json({
             success: true,
             token,
-            user: {
-                id: user[0].id,
-                username: user[0].username,
-            },
+            // user: {
+            //     id: user[0].id,
+            //     username: user[0].username,
+            // },
         });
     } catch (error) {
         console.error('Error during login:', error);
