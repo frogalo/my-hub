@@ -1,12 +1,12 @@
 // Login.jsx
 
-import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useMutation} from 'react-query';
-import {login, register} from "../../api/users"; // Import register function
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import { login, register } from "../../api/users";
 import Store from "../../api/store";
 import styled from "styled-components";
-import {colors} from "../../common/colors/Colors";
+import { colors } from "../../common/colors/Colors";
 import StyledInput from "../../common/inputs/StyledInput";
 import Button from "../../common/buttons/Button";
 
@@ -20,6 +20,8 @@ const LoginWrapper = styled.div`
   max-width: 300px;
   margin: 150px auto auto;
   background-color: ${colors.secondary};
+  opacity: ${(props) => (props.isAnimating ? 0 : 1)};
+  transition: opacity 0.3s ease-in-out;
 `;
 
 const Title = styled.h1`
@@ -32,7 +34,6 @@ const FormLabel = styled.label`
   margin-bottom: 10px;
 `;
 
-
 const ButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
@@ -44,7 +45,8 @@ const ButtonDiv = styled.div`
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isRegisterMode, setIsRegisterMode] = useState(false); // State to track registration mode
+    const [isRegisterMode, setIsRegisterMode] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
     const navigate = useNavigate();
 
     const loginMutation = useMutation(login, {
@@ -56,39 +58,51 @@ const Login = () => {
             console.error(error);
         },
         onSettled: () => {
-            navigate('/dashboard', {replace: true});
+            navigate('/dashboard', { replace: true });
         },
     });
 
     const registerMutation = useMutation(register, {
         onSuccess: (data) => {
-            navigate('/login', {replace: true});
+            navigate('/login', { replace: true });
         },
         onError: (error) => {
             console.error(error);
         },
         onSettled: () => {
-            navigate('/dashboard', {replace: true});
+            navigate('/dashboard', { replace: true });
         },
     });
 
     const handleLogin = () => {
-        const payload = {username, password};
-        loginMutation.mutate(payload);
+        if (!isRegisterMode) {
+            setIsAnimating(true);
+            const payload = { username, password };
+            loginMutation.mutate(payload);
+        } else {
+            setIsRegisterMode(false);
+        }
     };
 
     const handleRegister = () => {
         if (isRegisterMode) {
-            const payload = {username, password};
+            setIsAnimating(true);
+            const payload = { username, password };
             registerMutation.mutate(payload);
         } else {
-            // Toggle to registration mode
             setIsRegisterMode(true);
         }
     };
 
+    const handleTransitionEnd = () => {
+        setIsAnimating(false);
+    };
+
     return (
-        <LoginWrapper>
+        <LoginWrapper
+            isAnimating={isAnimating}
+            onTransitionEnd={handleTransitionEnd}
+        >
             <Title>{isRegisterMode ? 'Register' : 'Login'}</Title>
             <form>
                 <FormLabel>
@@ -111,9 +125,14 @@ const Login = () => {
                 </FormLabel>
                 <ButtonDiv>
                     {isRegisterMode ? (
-                        <Button type="button" onClick={handleRegister}>
-                            Register
-                        </Button>
+                        <>
+                            <Button type="button" onClick={handleRegister}>
+                                Back
+                            </Button>
+                            <Button type="button" onClick={handleLogin}>
+                                Register
+                            </Button>
+                        </>
                     ) : (
                         <>
                             <Button type="button" onClick={handleLogin}>

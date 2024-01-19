@@ -52,6 +52,19 @@ class Store {
 
         return JSON.parse(jsonPayload);
     }
+
+    setTheme(theme) {
+        localStorage.setItem('theme', theme);
+    }
+
+    getTheme() {
+        return localStorage.getItem('theme');
+    }
+
+    removeTheme() {
+        localStorage.removeItem('theme');
+    }
 }
+
 
 export default new Store();

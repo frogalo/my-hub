@@ -21,7 +21,7 @@ const ProtectedRoute = () => {
     const token = Store.getToken();
 
     if (!token) {
-        console.log("NO TOKEN FOUND REDIRECTING TO LOGIN");
+        console.log("NO TOKEN FOUND, REDIRECTING TO LOGIN");
         return <Navigate to="/login"/>;
     }
 

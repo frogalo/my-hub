@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import {colors} from "../common/colors/Colors";
+import {colors, getElementsBackgroundColor, getElementsTextColor} from "../common/colors/Colors";
+import Store from "../api/store";
 
 const SidebarWrapper = styled.nav`
   width: 200px;
   height: 100vh;
-  background-color: ${colors.primary}; /* Adjust the background color as needed */
-  color: white;
+  background-color: ${(props) => getElementsBackgroundColor(props.theme)};
+  color: ${(props) => getElementsTextColor(props.theme)};
   padding-top: 100px;
 `;
 
@@ -21,7 +22,7 @@ const SidebarItem = styled.li`
 
 const SidebarLink = styled(Link)`
   text-decoration: none;
-  color: white;
+  color: ${colors.text};
   padding: 10px;
   display: block;
 
@@ -31,8 +32,11 @@ const SidebarLink = styled(Link)`
 `;
 
 const Sidebar = () => {
+    const [theme, setTheme] = useState(Store.getTheme() || 'light');
+
+
     return (
-        <SidebarWrapper>
+        <SidebarWrapper theme={theme}>
             <SidebarList>
                 <SidebarItem>
                     <SidebarLink to="/dashboard">Dashboard</SidebarLink>
