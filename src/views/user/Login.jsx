@@ -14,14 +14,19 @@ const Login = () => {
 
     const loginMutation = useMutation(login, {
         onSuccess: (data) => {
-            setToken(data.data.token);
-            Store.setToken(token);
-            navigate('/dashboard');
+            const authToken = data.data.token;
+            setToken(authToken);
+            // console.log("setting up new token...", authToken)
+            Store.setToken(authToken);
         },
         onError: (error) => {
             console.error(error);
-        }
+        },
+        onSettled: () => {
+            navigate('/dashboard', {replace: true});
+        },
     });
+
 
     const handleLogin = () => {
         const payload = {};
@@ -29,6 +34,7 @@ const Login = () => {
         payload.password = password;
         loginMutation.mutate(payload)
     };
+
 
     return (
         <div>

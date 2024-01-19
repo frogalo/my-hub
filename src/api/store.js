@@ -1,12 +1,23 @@
 class Store {
     setToken(token) {
+        // console.log("addingToken...", token)
         sessionStorage.setItem('jwtToken', token);
     }
 
     getToken() {
+        // console.log("gettingToken...", sessionStorage.getItem('jwtToken'))
         return sessionStorage.getItem('jwtToken');
     }
 
+    setUser(token) {
+        const user = this.parseJwt(token);
+        localStorage.setItem("userId", JSON.stringify(user));
+    }
+
+    getUser() {
+        const user = localStorage.getItem("user");
+        return user ? JSON.parse(user) : null;
+    }
 
     removeToken() {
         sessionStorage.removeItem('jwtToken');
@@ -17,10 +28,12 @@ class Store {
         if (token) {
             const decodedToken = this.parseJwt(token);
             if (decodedToken.exp * 1000 < Date.now()) {
-                return true; // Token is expired
+                console.log("TOKEN EXPIRED")
+                return true;
             }
         }
-        return false; // Token is not expired or not present
+        console.log("TOKEN NOT")
+        return false;
     }
 
     parseJwt(token) {

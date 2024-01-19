@@ -1,25 +1,24 @@
-import {Navigate, Outlet} from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import DashboardHeader from "../components/DashboardHeader";
 import SideBar from "../components/SideBar";
+import Store from "../api/store";
 
 const ProtectedRoute = () => {
-    // Implement your authentication logic here
-    // For simplicity, always consider the user authenticated in this example
-    const isAuthenticated = false;
+    const token = Store.getToken();
 
-    if (!isAuthenticated) {
-        return <Navigate to="/login"/>;
+    if (!token) {
+        console.log("NO TOKEN FOUND REDIRECTING TO LOGIN");
+        return <Navigate to="/login" />;
     }
 
-    // Render your protected layout here, including common components like headers and sidebars
     return (
         <>
-            <DashboardHeader/>
+            <DashboardHeader />
             <div className="sidebar">
-                <SideBar/>
+                <SideBar />
             </div>
             <div className="main-content">
-                <Outlet/> {/* This is where nested protected routes will be rendered */}
+                <Outlet /> {/* This is where nested protected routes will be rendered */}
             </div>
         </>
     );
