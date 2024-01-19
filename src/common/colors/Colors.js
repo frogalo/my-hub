@@ -131,6 +131,12 @@ export const getElementsBackgroundColor = (theme) => {
         : colors[':root[data-theme=\'dark\']']['--background-200'];
 };
 
+export const getElementsButtonColor = (theme) => {
+    return theme === 'light'
+        ? colors[':root[data-theme=\'light\']']['--accent-500']
+        : colors[':root[data-theme=\'dark\']']['--accent-500'];
+};
+
 export const getElementsTextColor = (theme) => {
     return theme === 'light'
         ? colors[':root[data-theme=\'light\']']['--text-950']

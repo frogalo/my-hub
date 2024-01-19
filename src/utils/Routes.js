@@ -5,6 +5,7 @@ import Login from '../views/user/Login';
 import ProtectedRoute from './ProtectedRoute';
 import Store from "../api/store";
 import {ErrorBoundary} from "react-error-boundary";
+import Profile from "../views/user/Profile";
 
 const ErrorFallback = ({ error }) => (
     <div>
@@ -41,6 +42,10 @@ const Routes = () => {
                 {
                     path: 'dashboard',
                     element: <Dashboard/>,
+                },
+                {
+                    path: 'profile',
+                    element: <Profile/>,
                 },
                 {
                     path: 'logout',

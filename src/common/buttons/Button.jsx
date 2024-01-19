@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import {colors} from "../colors/Colors";
+import { getElementsButtonColor} from "../colors/Colors";
 
 const Button = styled.button`
-  background-color: ${colors.accent};
+  background-color: ${getElementsButtonColor('light')}; 
   color: white;
   padding: 10px 15px;
   border: none;

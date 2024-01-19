@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Bitter:700|Bitter:400');
+
 
 body {
-    font-family: 'Bitter', serif;
+    font-family: 'Titillium Web', sans-serif;
     font-weight: 400;
     background-color: #040218;
     color: #e9e7fd;
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: 'Bitter', serif;
+    font-family: 'Titillium Web', sans-serif;
     font-weight: 700;
 }
 

@@ -1,24 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import {colors} from "../common/colors/Colors";
+import {colors, getElementsBackgroundColor, getElementsTextColor} from "../common/colors/Colors";
 import Button from "../common/buttons/Button";
 import Store from "../api/store";
 import {useNavigate} from "react-router-dom";
 import Switch from '@mui/material/Switch';
 
-const getBackgroundColor = (theme) => {
-    return theme === 'light'
-        ? colors[':root[data-theme=\'light\']']['--background-100']
-        : colors[':root[data-theme=\'dark\']']['--background-100'];
-};
 
 const HeaderWrapper = styled.header`
-  background-color: ${(props) => getBackgroundColor(props.theme)};
+  background-color: ${(props) => getElementsBackgroundColor(props.theme)};
   padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${colors.text};
+  color: ${(props) => getElementsTextColor(props.theme)};
 `;
 
 const Title = styled.h1`
@@ -45,7 +40,7 @@ const DashboardHeader = () => {
 
     return (
         <HeaderWrapper theme={theme}>
-            <Title></Title>
+            <div></div>
             <div style={{display: 'flex', alignItems: 'center'}}>
                 <span>Dark Mode</span>
                 <Switch
@@ -53,7 +48,10 @@ const DashboardHeader = () => {
                     checked={theme === 'dark'}
                     onChange={toggleTheme}
                 />
-                <Button type="button" onClick={handleLogout}>
+                <Button
+                    type="button"
+                    onClick={handleLogout}
+                >
                     Logout
                 </Button>
             </div>

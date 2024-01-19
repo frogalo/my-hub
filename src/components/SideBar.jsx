@@ -22,7 +22,7 @@ const SidebarItem = styled.li`
 
 const SidebarLink = styled(Link)`
   text-decoration: none;
-  color: ${colors.text};
+  color: ${(props) => getElementsTextColor(props.theme)};
   padding: 10px;
   display: block;
 
@@ -32,7 +32,7 @@ const SidebarLink = styled(Link)`
 `;
 
 const Sidebar = () => {
-    const [theme, setTheme] = useState(Store.getTheme() || 'light');
+    const [theme] = useState(Store.getTheme() || 'dark');
 
 
     return (
