@@ -5,3 +5,7 @@ const GROUP_DEFAULT_URL = "users";
 export const login = async (payload) => {
     return await API.post(`${GROUP_DEFAULT_URL}/login`, payload);
 };
+
+export const register = async (payload) => {
+    return await API.post(`${GROUP_DEFAULT_URL}/register`, payload);
+};
